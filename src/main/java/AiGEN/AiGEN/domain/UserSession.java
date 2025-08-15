@@ -1,5 +1,6 @@
 package AiGEN.AiGEN.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
@@ -18,12 +19,15 @@ import java.time.LocalDateTime;
 public class UserSession {
 
     @Id
+    @Column(name = "anon_id", nullable=false)
     private String anonId;
 
     @CreatedDate
+    @Column(name = "created_at", nullable=false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Column(name = "last_seen", nullable=false)
     private LocalDateTime lastSeen;
 
     public UserSession(String anonId) {

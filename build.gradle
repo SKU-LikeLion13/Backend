@@ -40,6 +40,9 @@ dependencies {
 
 	//swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+
+	implementation 'org.apache.poi:poi-ooxml:5.2.5'  // XLSX 파싱
+
 }
 
 tasks.named('test') {
