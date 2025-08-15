@@ -7,10 +7,7 @@ import AiGEN.AiGEN.domain.UserSession;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor

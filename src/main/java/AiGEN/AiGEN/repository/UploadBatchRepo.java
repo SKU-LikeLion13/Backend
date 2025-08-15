@@ -2,7 +2,6 @@ package AiGEN.AiGEN.repository;
 
 import AiGEN.AiGEN.domain.UploadBatch;
 import AiGEN.AiGEN.domain.UserSession;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +21,4 @@ public interface UploadBatchRepo {
     /**  가장 최근 배치 1건 */
     Optional<Long> findLatestIdBySession(String anonId);
 
-//    /** 특정 사용자(anonId)의 기간 내 배치(업로드 시각 기준, 최신순) */
-//    List<UploadBatch> findBySessionAndRange(String anonId, LocalDateTime from, LocalDateTime to);
-//
-//    /** 특정 사용자(anonId)의 배치 일괄 삭제 (필요 시 사용) */
-//    int deleteBySession(String anonId);
 }
