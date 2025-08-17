@@ -43,6 +43,10 @@ dependencies {
 
 	implementation 'org.apache.poi:poi-ooxml:5.2.5'  // XLSX 파싱
 
+	//WebClient
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+
 }
 
 tasks.named('test') {

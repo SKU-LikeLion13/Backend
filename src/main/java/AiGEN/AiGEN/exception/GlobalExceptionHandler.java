@@ -75,4 +75,10 @@ public class GlobalExceptionHandler {
                 body(req, 500, "INTERNAL_ERROR", "예상치 못한 서버 오류가 발생했습니다.")
         );
     }
+    @ExceptionHandler(InvalidHeaderException.class)
+    public ResponseEntity<Map<String,Object>> invalidHeader(HttpServletRequest req, InvalidHeaderException ex) {
+        return ResponseEntity.badRequest().body(
+                body(req, 400, "INVALID_HEADER", ex.getMessage())
+        );
+    }
 }

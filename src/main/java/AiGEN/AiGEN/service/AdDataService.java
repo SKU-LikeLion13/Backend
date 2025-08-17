@@ -23,19 +23,21 @@ public class AdDataService {
         Long batchId = uploadBatchRepo.findLatestIdBySession(session.getAnonId())
                 .orElseThrow(() -> new IllegalArgumentException("최근 업로드 배치가 없습니다."));
         List<Object[]> rows = adDataRepo.sumByPlatformForBatchOfSession(session, batchId);
-        // ↓ 기존 변환 로직 그대로
+
         return rows.stream().map(r -> {
             String code  = (String)  r[0];
             long cost    = ((Number) r[1]).longValue();
             int clicks   = ((Number) r[2]).intValue();
             int conv     = ((Number) r[3]).intValue();
             long revenue = ((Number) r[4]).longValue();
-            var cpc  = div(cost, clicks);
-            var cvr  = div(conv, clicks);
-            var roas = div(revenue, cost);
+            var cpc  = div(cost, clicks);                           // 원
+            var cvr  = div(conv, clicks).multiply(BigDecimal.valueOf(100));          // % 스케일
+            var roas = div(revenue, cost).multiply(BigDecimal.valueOf(100));         // % 스케일
             var roi  = cost == 0 ? BigDecimal.ZERO
                     : BigDecimal.valueOf(revenue - cost)
-                    .divide(BigDecimal.valueOf(cost), 4, RoundingMode.HALF_UP);
+                    .divide(BigDecimal.valueOf(cost), 4, RoundingMode.HALF_UP)
+                    .multiply(BigDecimal.valueOf(100));                            // % 스케일
+
             return new AdDataDTO.PlatformTotalsRes(code, cost, clicks, conv, revenue, cpc, cvr, roas, roi);
         }).collect(Collectors.toList());
     }
@@ -45,7 +47,7 @@ public class AdDataService {
         Long batchId = uploadBatchRepo.findLatestIdBySession(session.getAnonId())
                 .orElseThrow(() -> new IllegalArgumentException("최근 업로드 배치가 없습니다."));
         List<Object[]> rows = adDataRepo.sumByMonthForBatchAndPlatformOfSession(session, batchId, platformCode);
-        // ↓ 기존 변환 로직 그대로
+
         return rows.stream().map(r -> {
             int year     = ((Number) r[0]).intValue();
             int month    = ((Number) r[1]).intValue();
@@ -53,12 +55,14 @@ public class AdDataService {
             int clicks   = ((Number) r[3]).intValue();
             int conv     = ((Number) r[4]).intValue();
             long revenue = ((Number) r[5]).longValue();
-            var cpc  = div(cost, clicks);
-            var cvr  = div(conv, clicks);
-            var roas = div(revenue, cost);
+            var cpc  = div(cost, clicks);                           // 원
+            var cvr  = div(conv, clicks).multiply(BigDecimal.valueOf(100));          // % 스케일
+            var roas = div(revenue, cost).multiply(BigDecimal.valueOf(100));         // % 스케일
             var roi  = cost == 0 ? BigDecimal.ZERO
                     : BigDecimal.valueOf(revenue - cost)
-                    .divide(BigDecimal.valueOf(cost), 4, RoundingMode.HALF_UP);
+                    .divide(BigDecimal.valueOf(cost), 4, RoundingMode.HALF_UP)
+                    .multiply(BigDecimal.valueOf(100));                            // % 스케일
+
             return new AdDataDTO.MonthlyTotalsRes(year, month, cost, clicks, conv, revenue, cpc, cvr, roas, roi);
         }).collect(Collectors.toList());
     }

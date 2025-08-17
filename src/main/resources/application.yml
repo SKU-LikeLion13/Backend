@@ -11,4 +11,10 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+  ai:
+    openrouter:
+      base-url: https://openrouter.ai/api/v1
+      api-key: ${OPENROUTER_API_KEY:}
+      model: ${OPENROUTER_MODEL:meta-llama/llama-3.1-8b-instruct}
+
 #    database-platform:
