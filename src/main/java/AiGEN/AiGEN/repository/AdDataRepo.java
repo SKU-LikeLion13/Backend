@@ -13,6 +13,8 @@ public interface AdDataRepo {
 
     AdData save(AdData adData);
 
+    List<AdData> findByBatchId(Long batchId);
+
     // 최신 배치 + 세션 범위로 플랫폼 합계/지표
     List<Object[]> sumByPlatformForBatchOfSession(UserSession session, Long batchId);
 

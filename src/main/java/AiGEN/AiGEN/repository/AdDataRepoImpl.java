@@ -5,6 +5,7 @@ import AiGEN.AiGEN.domain.AdPlatform;
 import AiGEN.AiGEN.domain.UploadBatch;
 import AiGEN.AiGEN.domain.UserSession;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -18,6 +19,25 @@ public class AdDataRepoImpl implements AdDataRepo {
     public AdData save(AdData adData) {
         em.persist(adData);
         return adData;
+    }
+
+    @Override
+    public List<AdData> findByBatchId(Long batchId) {
+        try {
+            return em.createQuery("""
+                    select a
+                    from AdData a
+                    where a.batch.id = :batchId
+                    """, AdData.class)
+                    .setParameter("batchId", batchId)
+                    .getResultList();
+        } catch (NoResultException e) {
+            // 결과가 없는 경우 빈 리스트 반환
+            return List.of();
+        } catch (Exception e) {
+            // 그 외 알 수 없는 오류 처리
+            throw new IllegalStateException("광고 데이터 조회 중 오류 발생", e);
+        }
     }
 
     @Override

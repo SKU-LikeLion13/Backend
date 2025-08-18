@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserSessionRepo extends JpaRepository<UserSession, String> {
-    // anonId로 조회 (findById와 동일하지만 의도 명확히 하기 위해 추가)
+    // anonId로 조회
     Optional<UserSession> findByAnonId(String anonId);
 
     // lastSeen만 갱신 (Auditing과 별개로 PreUpdate 트리거 없이 즉시 업데이트)
