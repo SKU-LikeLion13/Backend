@@ -58,8 +58,7 @@ public class AiExplainController {
     @PostMapping(value = "/platforms/{platformCode}/monthly", produces = MediaType.APPLICATION_JSON_VALUE)
     public ExplainResponse explainPlatformMonthly(
             @RequestHeader("X-Anon-Id") String anonId,
-            @PathVariable String platformCode,
-            @RequestParam(required = false, defaultValue = "전체 업로드 범위") String dateRange
+            @PathVariable String platformCode
     ) {
         validateAnonId(anonId);
         if (platformCode == null || platformCode.isBlank())
