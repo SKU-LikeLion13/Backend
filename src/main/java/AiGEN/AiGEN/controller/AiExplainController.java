@@ -7,9 +7,11 @@ import AiGEN.AiGEN.service.ExplainAggregationService;
 import AiGEN.AiGEN.service.KpiExplainService;
 import AiGEN.AiGEN.service.UserSessionService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/explain")
 @RequiredArgsConstructor
+@Tag(name = "Explain API", description = "광고 KPI 데이터에 대한 AI 기반 설명 API")
 public class AiExplainController {
 
     private final UserSessionService userSessionService;
@@ -38,6 +41,7 @@ public class AiExplainController {
     )
     @PostMapping(value = "/platforms", produces = MediaType.APPLICATION_JSON_VALUE)
     public ExplainResponse explainPlatforms(
+            @Parameter(description = "사용자 세션 ID(UUID)", required = true, example = "123e4567-e89b-12d3-a456-426614174000")
             @RequestHeader("X-Anon-Id") String anonId) {
         validateAnonId(anonId);
         UserSession session = userSessionService.getOrCreate(anonId);
@@ -57,7 +61,10 @@ public class AiExplainController {
     )
     @PostMapping(value = "/platforms/{platformCode}/monthly", produces = MediaType.APPLICATION_JSON_VALUE)
     public ExplainResponse explainPlatformMonthly(
+            @Parameter(description = "사용자 세션 ID(UUID)", required = true, example = "123e4567-e89b-12d3-a456-426614174000")
             @RequestHeader("X-Anon-Id") String anonId,
+
+            @Parameter(description = "플랫폼 코드 (예: GOOGLE, META, NAVER)", required = true, example = "GOOGLE")
             @PathVariable String platformCode
     ) {
         validateAnonId(anonId);
