@@ -1,6 +1,8 @@
 package AiGEN.AiGEN.controller;
 
 import AiGEN.AiGEN.DTO.ChatDTO;
+import AiGEN.AiGEN.domain.ChatMessage;
+import AiGEN.AiGEN.repository.ChatMessageRepo;
 import AiGEN.AiGEN.service.ChatbotService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -10,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "챗봇 API", description = "AI 챗봇과 대화하는 기능을 제공합니다.")
 public class ChatController {
     private final ChatbotService chatbotService;
+    private final ChatMessageRepo chatMessageRepo;
 
     @Operation(
             summary = "챗봇과 대화하기",
@@ -58,5 +62,19 @@ public class ChatController {
 
         ChatDTO.ChatRes response = new ChatDTO.ChatRes(chatbotResponse, anonId, chatRequest.getBatchId());
         return new ChatDTO.ChatRes(chatbotResponse, anonId, chatRequest.getBatchId());
+    }
+
+    @Operation(
+            summary = "대화 기록 조회",
+            description = "사용자의 이전 대화 기록을 시간순으로 조회합니다."
+    )
+
+    @GetMapping("/history")
+    public ResponseEntity<List<ChatMessage>> getChatHistory(
+            @Parameter(description = "사용자 익명 ID", required = true)
+            @RequestHeader("X-Anon-Id") String anonId
+    ) {
+        List<ChatMessage> history = chatMessageRepo.findByAnonId(anonId);
+        return ResponseEntity.ok(history);
     }
 }

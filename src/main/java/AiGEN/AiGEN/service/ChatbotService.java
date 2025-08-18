@@ -1,7 +1,6 @@
 package AiGEN.AiGEN.service;
 
 import AiGEN.AiGEN.DTO.AdDataDTO;
-import AiGEN.AiGEN.domain.AdData;
 import AiGEN.AiGEN.domain.ChatMessage;
 import AiGEN.AiGEN.domain.UserSession;
 import AiGEN.AiGEN.repository.ChatMessageRepo;
