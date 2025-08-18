@@ -1,6 +1,7 @@
 package AiGEN.AiGEN.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     private Map<String, Object> body(HttpServletRequest req, int status, String code, String msg) {
@@ -69,16 +71,25 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String,Object>> unknown(HttpServletRequest req) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                body(req, 500, "INTERNAL_ERROR", "예상치 못한 서버 오류가 발생했습니다.")
-        );
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<Map<String,Object>> unknown(HttpServletRequest req) {
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+//                body(req, 500, "INTERNAL_ERROR", "예상치 못한 서버 오류가 발생했습니다.")
+//        );
+//    }
     @ExceptionHandler(InvalidHeaderException.class)
     public ResponseEntity<Map<String,Object>> invalidHeader(HttpServletRequest req, InvalidHeaderException ex) {
         return ResponseEntity.badRequest().body(
                 body(req, 400, "INVALID_HEADER", ex.getMessage())
+        );
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String,Object>> unknown(HttpServletRequest req, Exception e) {
+        log.error("[INTERNAL_ERROR] {} {}", req.getMethod(), req.getRequestURI(), e); // ★ 스택 로그
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                body(req, 500, "INTERNAL_ERROR", "예상치 못한 서버 오류가 발생했습니다.")
         );
     }
 }
