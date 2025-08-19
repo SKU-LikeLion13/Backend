@@ -38,3 +38,5 @@ out/
 
 ###api_key###
 .env
+
+/src/main/resources/application.yml
