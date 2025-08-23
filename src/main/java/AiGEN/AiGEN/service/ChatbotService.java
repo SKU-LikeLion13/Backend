@@ -1,6 +1,7 @@
 package AiGEN.AiGEN.service;
 
 import AiGEN.AiGEN.DTO.AdDataDTO;
+import AiGEN.AiGEN.client.GeminiClient;
 import AiGEN.AiGEN.domain.ChatMessage;
 import AiGEN.AiGEN.domain.UserSession;
 import AiGEN.AiGEN.repository.ChatMessageRepo;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

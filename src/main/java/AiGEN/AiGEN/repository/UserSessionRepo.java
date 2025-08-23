@@ -12,12 +12,15 @@ import java.util.Optional;
 
 @Repository
 public interface UserSessionRepo extends JpaRepository<UserSession, String> {
+
+
     // anonId로 조회
     Optional<UserSession> findByAnonId(String anonId);
 
-    // lastSeen만 갱신 (Auditing과 별개로 PreUpdate 트리거 없이 즉시 업데이트)
+    // lastSeen만 갱신
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("update UserSession us set us.lastSeen = :now where us.anonId = :anonId")
     int touch(@Param("anonId") String anonId, @Param("now") LocalDateTime now);
+
 }
 

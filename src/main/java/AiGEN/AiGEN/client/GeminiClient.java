@@ -1,4 +1,4 @@
-package AiGEN.AiGEN.service;
+package AiGEN.AiGEN.client;
 
 
 import lombok.RequiredArgsConstructor;

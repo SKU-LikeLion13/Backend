@@ -33,7 +33,7 @@ public class UserSessionController {
     )
     @GetMapping("/me")
     public ResponseEntity<UserSession> getOrCreate(
-            @RequestHeader(value = "X-Anon-Id", required = false) String anonId) {
+            @RequestHeader(value = "X-Anon-Id") String anonId) {
 
         String valid = validateAnonId(anonId);
         return ResponseEntity.ok(sessionService.getOrCreate(valid));
@@ -51,7 +51,7 @@ public class UserSessionController {
 
     @PostMapping("/me/touch")
     public ResponseEntity<UserSession> touch(
-            @RequestHeader(value = "X-Anon-Id", required = false) String anonId) {
+            @RequestHeader(value = "X-Anon-Id") String anonId) {
 
         String valid = validateAnonId(anonId);
         return ResponseEntity.ok(sessionService.touch(valid));

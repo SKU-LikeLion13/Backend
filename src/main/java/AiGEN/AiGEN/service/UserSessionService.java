@@ -41,7 +41,7 @@ public class UserSessionService {
     }
 
     /**
-     * 단순 조회용
+     *  조회용
      */
     @Transactional(readOnly = true)
     public Optional<UserSession> find(String anonId) {

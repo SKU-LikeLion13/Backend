@@ -33,11 +33,6 @@ public class ChatController {
                             content = @Content(schema = @Schema(implementation = ChatDTO.ChatRes.class))
                     ),
                     @ApiResponse(
-                            responseCode = "400",
-                            description = "잘못된 요청 (예: 필수 헤더 누락)",
-                            content = @Content(schema = @Schema(implementation = String.class))
-                    ),
-                    @ApiResponse(
                             responseCode = "500",
                             description = "서버 내부 오류 (예: AI 호출 실패)",
                             content = @Content(schema = @Schema(implementation = String.class))
@@ -49,10 +44,10 @@ public class ChatController {
             @Parameter(description = "사용자 익명 ID", required = true, example = "X-Anon-Id: 1a2b3c4d")
             @RequestHeader(name = "X-Anon-Id") String anonId,
             @RequestBody ChatDTO.ChatReq chatRequest) {
-
-        if (anonId == null || anonId.isBlank()) {
-            throw new IllegalArgumentException("익명 사용자 ID가 누락되었습니다.");
-        }
+//
+//        if (anonId == null || anonId.isBlank()) {
+//            throw new IllegalArgumentException("익명 사용자 ID가 누락되었습니다.");
+//        }
 
         String chatbotResponse = chatbotService.getChatResponse(
                 anonId,

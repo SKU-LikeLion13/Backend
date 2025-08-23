@@ -1,6 +1,7 @@
 package AiGEN.AiGEN.service;
 
 import AiGEN.AiGEN.DTO.ExplainResponse;
+import AiGEN.AiGEN.client.GeminiClient;
 import AiGEN.AiGEN.domain.AiExplainLog;
 import AiGEN.AiGEN.repository.AiExplainLogRepo;
 import com.fasterxml.jackson.databind.JsonNode;

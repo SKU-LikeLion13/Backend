@@ -34,7 +34,6 @@ public class AiExplainController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "설명 생성 성공",
                             content = @Content(schema = @Schema(implementation = ExplainResponse.class))),
-                    @ApiResponse(responseCode = "400", description = "잘못된 요청"),
                     @ApiResponse(responseCode = "404", description = "집계 데이터 없음"),
                     @ApiResponse(responseCode = "500", description = "외부 AI 호출 실패")
             }
@@ -54,7 +53,6 @@ public class AiExplainController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "설명 생성 성공",
                             content = @Content(schema = @Schema(implementation = ExplainResponse.class))),
-                    @ApiResponse(responseCode = "400", description = "잘못된 요청"),
                     @ApiResponse(responseCode = "404", description = "집계 데이터 없음"),
                     @ApiResponse(responseCode = "500", description = "외부 AI 호출 실패")
             }
