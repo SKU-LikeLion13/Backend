@@ -16,13 +16,14 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOrigins(List.of(
-                "http://localhost:5173",          // 개발 프론트
+        cfg.setAllowedOriginPatterns(List.of(
+                "http://localhost:*",
+                "http://127.0.0.1:*",
                 "https://your-frontend-domain"    // 배포 프론트(교체)
         ));
         cfg.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         cfg.setAllowedHeaders(List.of("*")); // 필요 헤더 자유롭게
-        cfg.setExposedHeaders(List.of("Content-Disposition")); // 파일명 노출
+        cfg.setExposedHeaders(List.of("Content-Disposition", "Location"));
         cfg.setAllowCredentials(false); // 쿠키/세션 쓰면 true로 바꾸기(그땐 origin * 금지)
         cfg.setMaxAge(3600L);
 

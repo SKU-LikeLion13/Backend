@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -67,16 +66,9 @@ public class CreativeController {
             String fileNameEnc = URLEncoder.encode("reels.mp4", StandardCharsets.UTF_8).replace("+", "%20");
 
             // 절대 URL Location 생성 (현재 호스트 기준)
-            URI downloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/api/creative/reels/download")
-                    .queryParam("key", keyEnc)
-                    .queryParam("filename", fileNameEnc)
-                    .build(true)    // 인코딩 유지
-                    .toUri();
+            String downloadUrl = "/api/creative/reels/download?key=" + keyEnc + "&filename=" + fileNameEnc;
 
-            return ResponseEntity.status(303) // See Other → GET으로 따라감
-                    .location(downloadUri)
-                    .build();
+            return ResponseEntity.ok(java.util.Map.of("downloadUrl", downloadUrl));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Create reels failed: " + e.getMessage());
         }
