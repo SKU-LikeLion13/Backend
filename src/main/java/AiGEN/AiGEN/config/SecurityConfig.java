@@ -1,43 +1,17 @@
 package AiGEN.AiGEN.config;
-
-import java.util.List;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class SecurityConfig {
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOriginPatterns(List.of(
-                "http://localhost:*",
-                "http://127.0.0.1:*",
-                "https://your-frontend-domain"    // 배포 프론트(교체)
-        ));
-        cfg.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
-        cfg.setAllowedHeaders(List.of("*")); // 필요 헤더 자유롭게
-        cfg.setExposedHeaders(List.of("Content-Disposition", "Location"));
-        cfg.setAllowCredentials(false); // 쿠키/세션 쓰면 true로 바꾸기(그땐 origin * 금지)
-        cfg.setMaxAge(3600L);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", cfg); // 전역 적용
-        return source;
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .cors(Customizer.withDefaults())
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                .build();
+public class SecurityConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**") // 모든 경로(/**)에 대해 CORS 설정 적용
+                .allowedOrigins("http://localhost:5173","http://localhost:5174","https://aigen.sku-sku.com") // CORS 요청을 허용할 특정 도메인(origin)을 지정
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 허용할 HTTP 메서드를 지정
+                .allowedHeaders("*") // 클라이언트가 모든 HTTP 헤더를 보낼 수 있게 허용
+                .allowCredentials(true); // 기본적으로 브라우저는 CORS 요청을 보낼 때 쿠키나 인증 정보를 포함하지 않으므로 true로 설정하여
     }
 }

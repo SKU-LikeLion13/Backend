@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/aigen_prod?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/aigen_prod?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: root
     password: A!gen1313
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -20,6 +20,11 @@ spring:
     multipart:
       max-file-size: 4MB
       max-request-size: 32MB
+ai:
+  gemini:
+    base-url: https://generativelanguage.googleapis.com
+    api-key: ${GEMINI_API_KEY:}
+    model: ${GEMINI_MODEL:gemini-2.0-flash}
 r2:
   accessKey: ${CLOUDFLARE_ACCESS_KEY_ID}
   secretKey: ${CLOUDFLARE_SECRET_ACCESS_KEY}

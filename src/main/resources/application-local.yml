@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/aigen?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/aigen?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -22,6 +22,11 @@ spring:
       max-file-size: 4MB
       # 한 번의 요청에 포함된 모든 파일의 총 크기를 100MB로 설정합니다.
       max-request-size: 32MB
+ai:
+  gemini:
+    base-url: https://generativelanguage.googleapis.com
+    api-key: ${GEMINI_API_KEY:}
+    model: ${GEMINI_MODEL:gemini-2.0-flash}
 r2:
   accessKey: ${CLOUDFLARE_ACCESS_KEY_ID}
   secretKey: ${CLOUDFLARE_SECRET_ACCESS_KEY}
